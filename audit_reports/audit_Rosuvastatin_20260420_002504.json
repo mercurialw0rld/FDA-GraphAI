@@ -1,0 +1,48 @@
+[
+  {
+    "timestamp": "2026-04-20T03:24:40.853761+00:00",
+    "node": "fetch",
+    "drug_name": "Rosuvastatin",
+    "data_hash": "0947e1dffcd4",
+    "status": "executed",
+    "updates_keys": [
+      "adverse_effect_template",
+      "raw_fda_data"
+    ],
+    "error": null
+  },
+  {
+    "timestamp": "2026-04-20T03:24:57.728254+00:00",
+    "node": "parse_ae",
+    "drug_name": "Rosuvastatin",
+    "data_hash": "99785eeed27d",
+    "status": "executed",
+    "updates_keys": [
+      "parsed_adverse_events"
+    ],
+    "error": null
+  },
+  {
+    "timestamp": "2026-04-20T03:25:04.793297+00:00",
+    "node": "analyze",
+    "drug_name": "Rosuvastatin",
+    "data_hash": "73f33e9369ca",
+    "status": "executed",
+    "updates_keys": [
+      "clinical_analysis"
+    ],
+    "error": null
+  },
+  {
+    "timestamp": "2026-04-20T03:25:04.795860+00:00",
+    "node": "quality",
+    "drug_name": "Rosuvastatin",
+    "data_hash": "da7981c0060b",
+    "status": "executed",
+    "updates_keys": [
+      "clinical_analysis",
+      "needs_more_info"
+    ],
+    "error": null
+  }
+]

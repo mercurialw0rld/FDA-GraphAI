@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FDA-GraphAI Demo</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div id="loading-overlay" class="loading-overlay" aria-live="polite" aria-hidden="true">
+    <div class="loading-card">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Running graph workflow. This may take a few seconds...</p>
+    </div>
+  </div>
+  <main class="container">
+    <section class="hero card">
+      <p class="eyebrow">Clinical Intelligence Demo</p>
+      <h1>FDA-GraphAI with Audit Trail</h1>
+      <p class="subtitle">
+        Enter a drug name and run the full workflow: OpenFDA retrieval, AI-powered adverse-event parsing,
+        clinical analysis, and audit reporting.
+      </p>
+      <form method="post" action="/analyze" class="search-form" id="analyze-form">
+        <label for="drug_name">Drug Name</label>
+        <div class="input-row">
+          <input id="drug_name" name="drug_name" type="text" placeholder="e.g. Sertraline" required />
+          <button type="submit" id="run-button">Run Workflow</button>
+        </div>
+      </form>
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% endif %}
+    </section>
+
+    {% if result %}
+    <section class="grid">
+      <article class="card result-head">
+        <h2>Run Result</h2>
+        <p><strong>Drug:</strong> {{ result.drug_name }}</p>
+        <p><strong>Needs more info:</strong> {{ result.needs_more_info }}</p>
+        <p><strong>Audit report path:</strong> {{ result.audit_path }}</p>
+        <a class="download-link" href="{{ result.audit_download_url }}" download>Download Audit Report</a>
+      </article>
+
+      <article class="card">
+        <h2>Clinical Report</h2>
+        <pre>{{ result.clinical_analysis }}</pre>
+      </article>
+
+      <article class="card">
+        <h2>Parsed Adverse Events</h2>
+        <pre>{{ result.parsed_adverse_events }}</pre>
+      </article>
+
+      <article class="card">
+        <h2>Fallback ClinicalTrials</h2>
+        <pre>{{ result.fallback }}</pre>
+      </article>
+    </section>
+    {% endif %}
+  </main>
+  <script>
+    const form = document.getElementById("analyze-form");
+    const loadingOverlay = document.getElementById("loading-overlay");
+    const runButton = document.getElementById("run-button");
+
+    if (form && loadingOverlay && runButton) {
+      form.addEventListener("submit", () => {
+        loadingOverlay.classList.add("is-active");
+        loadingOverlay.setAttribute("aria-hidden", "false");
+        runButton.disabled = true;
+        runButton.textContent = "Running...";
+      });
+    }
+  </script>
+</body>
+</html>

@@ -40,12 +40,12 @@ def generate_clinical_report(fda_data: FDAClinicalData):
     2. Riesgos críticos detectados que podrían afectar la seguridad de los sujetos.
     3. Sugerencia de monitoreo para el ensayo clínico basado en la toxicidad reportada.
     
-    FORMATO: Profesional, científico y directo.
+    FORMATO: Profesional, científico y directo. Todo EN INGLES.
     """
 
     messages = [
         ("system", prompt),
-        ("human", "Por favor, genera el reporte clínico basado en los datos proporcionados.")
+        ("human", "Por favor, genera el reporte clínico basado en los datos proporcionados, dando el reporte en ingles.")
     ]
     
     response = model.invoke(messages)

@@ -48,3 +48,30 @@ def fetch_fda_label(drug_name: str):
     
     return clinical_info
 
+def fetch_clinicaltrials_fallback(drug_name: str) -> dict:
+    url = "https://clinicaltrials.gov/api/v2/studies"
+    params = {"query.term": drug_name, "pageSize": 3, "fields": "protocolSection"}
+    response = requests.get(url, params=params, timeout=15)
+    studies = response.json().get("studies", [])
+
+    return {"studies_found": len(studies), "raw": studies}
+
+class AdverseEvent(BaseModel):
+    event: str
+    severity: str  # "Critical" | "Major" | "Minor"
+    frequency: Optional[str]  # "common", "rare", etc.
+    system_organ_class: Optional[str]  # cardiovascular, hepatic, etc.
+
+class StructuredAdverseEvents(BaseModel):
+    events: List[AdverseEvent]
+    total_critical: int
+    red_flags: List[str] 
+
+
+if __name__ == "__main__":
+    # Prueba rápida
+    drug = "Atorvastatin"
+    fda_data = fetch_clinicaltrials_fallback(drug)
+    print(f"Datos de ClinicalTrials para {drug}: {fda_data['studies_found']} estudios encontrados.")
+
+
