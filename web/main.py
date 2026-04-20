@@ -1,6 +1,7 @@
 from pathlib import Path
 import sys
 import json
+import os
 
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
@@ -86,3 +87,10 @@ def analyze(request: Request, drug_name: str = Form(...)):
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run("web.main:app", host="0.0.0.0", port=port)

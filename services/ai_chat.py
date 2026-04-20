@@ -4,7 +4,6 @@ import os
 import sys
 from pathlib import Path
 
-# Permite ejecutar este archivo directamente sin romper imports por estructura de directorios.
 if __package__ is None or __package__ == "":
     project_root = Path(__file__).resolve().parents[1]
     if str(project_root) not in sys.path:
@@ -14,7 +13,6 @@ from data_ingestion.ingest import fetch_fda_label, FDAClinicalData
 
 dotenv.load_dotenv()
 
-# In production (e.g., Render), credentials should come from server environment variables.
 google_api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
 
 if not google_api_key:
@@ -59,6 +57,5 @@ def generate_clinical_report(fda_data: FDAClinicalData):
     return response.text
 
 if __name__ == "__main__":
-    # Esto es lo que mostrarías en una demo para Merck
     reporte_final = generate_clinical_report(fetch_fda_label("Atorvastatin"))
     print(reporte_final)
