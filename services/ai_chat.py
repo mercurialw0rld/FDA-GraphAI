@@ -33,7 +33,7 @@ def generate_clinical_report(fda_data: FDAClinicalData):
     """Transforma datos crudos en un reporte de nivel investigación clínica."""
     
     prompt = f"""
-    ACTUAR COMO: Especialista en Farmacovigilancia de GCTO Argentina.
+    ACTUAR COMO: Especialista en Farmacovigilancia.
     CONTEXTO: Estamos evaluando la viabilidad de un nuevo protocolo clínico.
     DATOS TÉCNICOS (FDA):
     - Molécula: {fda_data.generic_name}
