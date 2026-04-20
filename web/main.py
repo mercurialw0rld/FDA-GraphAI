@@ -4,7 +4,7 @@ import json
 import os
 
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -33,6 +33,11 @@ def index(request: Request):
             "error": None,
         },
     )
+
+
+@app.head("/")
+def index_head():
+    return Response(status_code=200)
 
 
 @app.post("/analyze", response_class=HTMLResponse)
