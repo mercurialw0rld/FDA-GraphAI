@@ -12,8 +12,15 @@ if __package__ is None or __package__ == "":
 
 from data_ingestion.ingest import fetch_fda_label, FDAClinicalData
 
-dotenv.load_dotenv()  # Carga las variables de entorno desde el archivo .env
-google_api_key = dotenv.get_key(dotenv.find_dotenv(), "GOOGLE_API_KEY")
+dotenv.load_dotenv()
+
+# In production (e.g., Render), credentials should come from server environment variables.
+google_api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+
+if not google_api_key:
+    raise RuntimeError(
+        "Missing API key. Set GOOGLE_API_KEY (or GEMINI_API_KEY) in the server environment."
+    )
 
 model = ChatGoogleGenerativeAI(
         model="gemini-3-flash-preview",
